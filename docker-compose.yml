@@ -20,6 +20,35 @@ services:
     networks:
       - backend-network
 
+  data-loader:
+    image: postgres:16-alpine
+    container_name: backend-data-loader
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: backend_db
+      DB_USER: backend_user
+      DB_PASSWORD: backend_password
+    volumes:
+      - ./books:/books:ro
+      - ./load-books.sh:/load-books.sh:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      app:
+        condition: service_started
+    networks:
+      - backend-network
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        apk add --no-cache jq bash
+        chmod +x /load-books.sh
+        echo "Waiting for app to create tables..."
+        sleep 15
+        /load-books.sh
+    restart: "no"
+
   app:
     build:
       context: .
