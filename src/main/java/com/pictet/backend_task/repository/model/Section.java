@@ -1,4 +1,4 @@
-package com.pictet.backend_task.repository;
+package com.pictet.backend_task.repository.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,7 +32,8 @@ public class Section {
     @Column(columnDefinition = "TEXT")
     private String text;
 
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private SectionType type;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
@@ -45,7 +46,7 @@ public class Section {
     ) {}
 
     public record Consequence(
-            String type,
+            ConsequenceType type,
             String value,
             String text
     ) {}

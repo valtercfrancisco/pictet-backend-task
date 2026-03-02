@@ -1,4 +1,4 @@
-package com.pictet.backend_task.repository;
+package com.pictet.backend_task.repository.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,9 @@ public class Book {
 
     private String title;
     private String author;
-    private String difficulty;
+
+    @Enumerated(EnumType.STRING)
+    private Difficulty difficulty;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "book_id")
