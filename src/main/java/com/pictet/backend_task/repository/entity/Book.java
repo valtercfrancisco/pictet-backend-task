@@ -31,7 +31,11 @@ public class Book {
     private Difficulty difficulty;
 
     @ElementCollection(targetClass = Category.class)
-    @CollectionTable(name = "book_categories", joinColumns = @JoinColumn(name = "book_id"))
+    @CollectionTable(
+            name = "book_categories",
+            joinColumns = @JoinColumn(name = "book_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"book_id", "category"})
+    )
     @Enumerated(EnumType.STRING)
     @Column(name = "category")
     private Set<Category> categories = new HashSet<>();

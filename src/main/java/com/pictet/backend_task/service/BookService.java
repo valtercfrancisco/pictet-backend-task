@@ -1,6 +1,7 @@
 package com.pictet.backend_task.service;
 
 import com.pictet.backend_task.error.BookNotFoundException;
+import com.pictet.backend_task.error.CategoryNotFoundException;
 import com.pictet.backend_task.repository.entity.Book;
 import com.pictet.backend_task.repository.BookRepository;
 import com.pictet.backend_task.utils.BookUtils;
@@ -56,7 +57,7 @@ public class BookService {
         val category = BookUtils.parseCategory(categoryName);
         val rowsAffected = bookRepository.removeCategoryFromBook(bookId, category.name());
         if (rowsAffected == 0) {
-            throw new IllegalArgumentException(
+            throw new CategoryNotFoundException(
                     "Category %s not found on book with id %s".formatted(categoryName, bookId));
         }
 

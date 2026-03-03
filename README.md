@@ -39,7 +39,17 @@ curl -s http://localhost:8080/v1/books/1 | jq '.'
 
 #### Search books by title
 ```bash
-curl -s "http://localhost:8080/v1/books/search?title=Crystal" | jq '.'
+curl -s "http://localhost:8080/v1/books/search/title?title=Crystal" | jq '.'
+```
+
+#### Search books by author
+```bash
+curl -s "http://localhost:8080/v1/books/search/author?author=Evelyn" | jq '.'
+```
+
+#### Search books by difficulty
+```bash
+curl -s "http://localhost:8080/v1/books/search/difficulty?difficulty=EASY" | jq '.'
 ```
 
 #### Search books by category
@@ -49,12 +59,46 @@ curl -s "http://localhost:8080/v1/books/search/category?category=FANTASY" | jq '
 
 #### Add category to a book
 ```bash
-curl -s -X POST "http://localhost:8080/v1/books/1/categories?category=HORROR" | jq '.'
+curl -s -X POST "http://localhost:8080/v1/books/1/categories/HORROR" | jq '.'
+```
+
+Response:
+```json
+{
+  "id": 1,
+  "title": "The Crystal Caverns",
+  "author": "Evelyn Stormrider",
+  "difficulty": "EASY",
+  "categories": ["HORROR"],
+  "sections": [...]
+}
 ```
 
 #### Remove category from a book
 ```bash
-curl -s -X DELETE "http://localhost:8080/v1/books/1/categories?category=HORROR" | jq '.'
+curl -s -X DELETE "http://localhost:8080/v1/books/1/categories/HORROR" | jq '.'
+```
+
+Response (success):
+```json
+{
+  "id": 1,
+  "title": "The Crystal Caverns",
+  "author": "Evelyn Stormrider",
+  "difficulty": "EASY",
+  "categories": [],
+  "sections": [...]
+}
+```
+
+Response (category not found - HTTP 404):
+```json
+{
+  "status": 404,
+  "error": "Category Not Found",
+  "message": "Category FANTASY not found on book with id 1",
+  "timestamp": "2026-03-03T13:05:01.337104965"
+}
 ```
 
 ### Reading Sessions (Playing Books)

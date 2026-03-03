@@ -19,7 +19,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
     List<Book> findByCategoriesContaining(Category category);
 
     @Modifying
-    @Query(value = "MERGE INTO book_categories (book_id, category) KEY(book_id, category) VALUES (:bookId, :category)", nativeQuery = true)
+    @Query(value = "INSERT INTO book_categories (book_id, category) VALUES (:bookId, :category) ON CONFLICT (book_id, category) DO NOTHING", nativeQuery = true)
     int addCategoryToBook(@Param("bookId") Long bookId, @Param("category") String category);
 
     @Modifying
