@@ -177,6 +177,30 @@ class BookControllerIntegrationTest {
     }
 
     @Test
+    @DisplayName("GET /v1/books/search/category - Should search books by category")
+    void searchByCategory_ShouldReturnMatchingBooks() throws Exception {
+        mockMvc.perform(get("/v1/books/search/category")
+                        .param("category", "FANTASY"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].categories", hasItem("FANTASY")));
+    }
+
+    @Test
+    @DisplayName("GET /v1/books/search/category - Should return 400 for invalid category")
+    void searchByCategory_WithInvalidCategory_ShouldReturn400() throws Exception {
+        mockMvc.perform(get("/v1/books/search/category")
+                        .param("category", "INVALID"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.status", is(400)))
+                .andExpect(jsonPath("$.error", is("Invalid Request")))
+                .andExpect(jsonPath("$.message", containsString("Category must be one of:")))
+                .andExpect(jsonPath("$.timestamp").exists());
+    }
+
+    @Test
     @DisplayName("POST /v1/books/{id}/categories/{category} - Should add category to book")
     void addCategoryToBook_WithValidCategory_ShouldAddCategory() throws Exception {
         mockMvc.perform(post("/v1/books/{id}/categories/{category}", testBook.getId(), "HORROR"))

@@ -24,7 +24,7 @@ public class BookService {
                 .orElseThrow(() -> new BookNotFoundException("Book with id %s not found".formatted(id)));
     }
 
-    public List<Book> searchBooks(String title, String author, String difficulty) {
+    public List<Book> searchBooks(String title, String author, String difficulty, String category) {
         if (title != null) {
             return bookRepository.findByTitleContainingIgnoreCase(title);
         } else if (author != null) {
@@ -32,6 +32,9 @@ public class BookService {
         } else if (difficulty != null) {
             val difficultyEnum = Utils.parseDifficulty(difficulty);
             return bookRepository.findByDifficulty(difficultyEnum);
+        } else if (category != null) {
+            val categoryEnum = Utils.parseCategory(category);
+            return bookRepository.findByCategoriesContaining(categoryEnum);
         } else {
             return (List<Book>) bookRepository.findAll();
         }
@@ -54,8 +57,7 @@ public class BookService {
         val rowsAffected = bookRepository.removeCategoryFromBook(bookId, category.name());
         if (rowsAffected == 0) {
             throw new IllegalArgumentException(
-                    "Category %s not found on book with id %s".formatted(categoryName, bookId)
-            );
+                    "Category %s not found on book with id %s".formatted(categoryName, bookId));
         }
 
         entityManager.flush();

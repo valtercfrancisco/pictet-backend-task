@@ -16,6 +16,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
     List<Book> findByTitleContainingIgnoreCase(String title);
     List<Book> findByAuthorContainingIgnoreCase(String author);
     List<Book> findByDifficulty(Difficulty difficulty);
+    List<Book> findByCategoriesContaining(Category category);
 
     @Modifying
     @Query(value = "MERGE INTO book_categories (book_id, category) KEY(book_id, category) VALUES (:bookId, :category)", nativeQuery = true)

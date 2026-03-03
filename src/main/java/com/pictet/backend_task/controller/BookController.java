@@ -18,7 +18,7 @@ public class BookController {
 
     @GetMapping
     public ResponseEntity<List<Book>> getAllBooks() {
-        val books = bookService.searchBooks(null, null, null);
+        val books = bookService.searchBooks(null, null, null, null);
         return ResponseEntity.ok(books);
     }
 
@@ -30,19 +30,25 @@ public class BookController {
 
     @GetMapping("/search/title")
     public ResponseEntity<List<Book>> searchByTitle(@RequestParam String title) {
-        val books = bookService.searchBooks(title, null, null);
+        val books = bookService.searchBooks(title, null, null, null);
         return ResponseEntity.ok(books);
     }
 
     @GetMapping("/search/author")
     public ResponseEntity<List<Book>> searchByAuthor(@RequestParam String author) {
-        val books = bookService.searchBooks(null, author, null);
+        val books = bookService.searchBooks(null, author, null, null);
         return ResponseEntity.ok(books);
     }
 
     @GetMapping("/search/difficulty")
     public ResponseEntity<List<Book>> searchByDifficulty(@RequestParam String difficulty) {
-        val books = bookService.searchBooks(null, null, difficulty);
+        val books = bookService.searchBooks(null, null, difficulty, null);
+        return ResponseEntity.ok(books);
+    }
+
+    @GetMapping("/search/category")
+    public ResponseEntity<List<Book>> searchByCategory(@RequestParam String category) {
+        val books = bookService.searchBooks(null, null, null, category);
         return ResponseEntity.ok(books);
     }
 
