@@ -25,6 +25,42 @@ public class BookExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
+    @ExceptionHandler(InvalidBookException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidBook(InvalidBookException ex) {
+        log.error("Invalid book data: {}", ex.getMessage());
+        val error = new ErrorResponse(
+                HttpStatus.UNPROCESSABLE_CONTENT.value(),
+                "Invalid Book Data",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_CONTENT).body(error);
+    }
+
+    @ExceptionHandler(SessionNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleSessionNotFound(SessionNotFoundException ex) {
+        log.error("Session not found: {}", ex.getMessage());
+        val error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                "Session Not Found",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(BookSectionNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleBookSectionNotFound(BookSectionNotFoundException ex) {
+        log.error("Book section not found: {}", ex.getMessage());
+        val error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                "Book Section Not Found",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex) {
         log.error("Invalid argument: {}", ex.getMessage());

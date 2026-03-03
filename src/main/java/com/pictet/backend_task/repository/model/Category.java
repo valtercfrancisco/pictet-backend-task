@@ -1,4 +1,4 @@
-package com.pictet.backend_task.model;
+package com.pictet.backend_task.repository.model;
 
 public enum Category {
     FICTION,

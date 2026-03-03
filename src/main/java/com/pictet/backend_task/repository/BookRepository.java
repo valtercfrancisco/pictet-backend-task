@@ -1,8 +1,8 @@
 package com.pictet.backend_task.repository;
 
-import com.pictet.backend_task.model.Category;
-import com.pictet.backend_task.repository.model.Book;
+import com.pictet.backend_task.repository.model.Category;
 import com.pictet.backend_task.repository.model.Difficulty;
+import com.pictet.backend_task.repository.entity.Book;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

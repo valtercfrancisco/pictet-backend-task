@@ -1,6 +1,8 @@
-package com.pictet.backend_task.repository.model;
+package com.pictet.backend_task.repository.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pictet.backend_task.repository.model.ConsequenceType;
+import com.pictet.backend_task.repository.model.SectionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

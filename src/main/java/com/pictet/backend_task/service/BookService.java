@@ -1,9 +1,9 @@
 package com.pictet.backend_task.service;
 
 import com.pictet.backend_task.error.BookNotFoundException;
-import com.pictet.backend_task.repository.model.Book;
+import com.pictet.backend_task.repository.entity.Book;
 import com.pictet.backend_task.repository.BookRepository;
-import com.pictet.backend_task.utils.Utils;
+import com.pictet.backend_task.utils.BookUtils;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -30,10 +30,10 @@ public class BookService {
         } else if (author != null) {
             return bookRepository.findByAuthorContainingIgnoreCase(author);
         } else if (difficulty != null) {
-            val difficultyEnum = Utils.parseDifficulty(difficulty);
+            val difficultyEnum = BookUtils.parseDifficulty(difficulty);
             return bookRepository.findByDifficulty(difficultyEnum);
         } else if (category != null) {
-            val categoryEnum = Utils.parseCategory(category);
+            val categoryEnum = BookUtils.parseCategory(category);
             return bookRepository.findByCategoriesContaining(categoryEnum);
         } else {
             return (List<Book>) bookRepository.findAll();
@@ -43,7 +43,7 @@ public class BookService {
     @Transactional
     public Book addCategoryToBook(Long bookId, String categoryName) {
         verifyBookExists(bookId);
-        val category = Utils.parseCategory(categoryName);
+        val category = BookUtils.parseCategory(categoryName);
         bookRepository.addCategoryToBook(bookId, category.name());
         entityManager.flush();
         entityManager.clear();
@@ -53,7 +53,7 @@ public class BookService {
     @Transactional
     public Book removeCategoryFromBook(Long bookId, String categoryName) {
         verifyBookExists(bookId);
-        val category = Utils.parseCategory(categoryName);
+        val category = BookUtils.parseCategory(categoryName);
         val rowsAffected = bookRepository.removeCategoryFromBook(bookId, category.name());
         if (rowsAffected == 0) {
             throw new IllegalArgumentException(

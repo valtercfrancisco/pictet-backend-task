@@ -1,6 +1,7 @@
-package com.pictet.backend_task.repository.model;
+package com.pictet.backend_task.repository.entity;
 
-import com.pictet.backend_task.model.Category;
+import com.pictet.backend_task.repository.model.Category;
+import com.pictet.backend_task.repository.model.Difficulty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

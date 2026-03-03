@@ -1,6 +1,6 @@
 package com.pictet.backend_task.controller;
 
-import com.pictet.backend_task.repository.model.Book;
+import com.pictet.backend_task.repository.entity.Book;
 import com.pictet.backend_task.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.val;

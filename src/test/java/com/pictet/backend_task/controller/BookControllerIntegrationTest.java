@@ -1,10 +1,10 @@
 package com.pictet.backend_task.controller;
 
-import com.pictet.backend_task.model.Category;
+import com.pictet.backend_task.repository.model.Category;
 import com.pictet.backend_task.repository.BookRepository;
-import com.pictet.backend_task.repository.model.Book;
+import com.pictet.backend_task.repository.entity.Book;
+import com.pictet.backend_task.repository.entity.Section;
 import com.pictet.backend_task.repository.model.Difficulty;
-import com.pictet.backend_task.repository.model.Section;
 import com.pictet.backend_task.repository.model.SectionType;
 import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,6 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
