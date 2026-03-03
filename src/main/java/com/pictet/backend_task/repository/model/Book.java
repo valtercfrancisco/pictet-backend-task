@@ -1,12 +1,15 @@
 package com.pictet.backend_task.repository.model;
 
+import com.pictet.backend_task.model.Category;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "books")
@@ -25,6 +28,12 @@ public class Book {
 
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
+
+    @ElementCollection(targetClass = Category.class)
+    @CollectionTable(name = "book_categories", joinColumns = @JoinColumn(name = "book_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category")
+    private Set<Category> categories = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "book_id")

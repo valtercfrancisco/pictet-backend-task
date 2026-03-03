@@ -1,6 +1,5 @@
 package com.pictet.backend_task.controller;
 
-import com.pictet.backend_task.error.BookNotFoundException;
 import com.pictet.backend_task.repository.model.Book;
 import com.pictet.backend_task.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +24,8 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
-        return bookService.getBookById(id)
-                .map(ResponseEntity::ok)
-                .orElseThrow(() -> new BookNotFoundException("Book with id " + id + " not found"));
+        val book = bookService.getBookById(id);
+        return ResponseEntity.ok(book);
     }
 
     @GetMapping("/search/title")
@@ -46,5 +44,17 @@ public class BookController {
     public ResponseEntity<List<Book>> searchByDifficulty(@RequestParam String difficulty) {
         val books = bookService.searchBooks(null, null, difficulty);
         return ResponseEntity.ok(books);
+    }
+
+    @PostMapping("/{id}/categories/{category}")
+    public ResponseEntity<Book> addCategoryToBook(@PathVariable Long id, @PathVariable String category) {
+        val book = bookService.addCategoryToBook(id, category);
+        return ResponseEntity.ok(book);
+    }
+
+    @DeleteMapping("/{id}/categories/{category}")
+    public ResponseEntity<Book> removeCategoryFromBook(@PathVariable Long id, @PathVariable String category) {
+        val book = bookService.removeCategoryFromBook(id, category);
+        return ResponseEntity.ok(book);
     }
 }
